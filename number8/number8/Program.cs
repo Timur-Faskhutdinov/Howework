@@ -21,6 +21,7 @@ namespace number8
                         Console.Write("+");
                     }
                     Console.WriteLine("|");
+                    // Я посчитал, что | и переход на новую строку - сойдет за разделитель.
                 }
                 
                 a = Int64.Parse(Console.ReadLine());

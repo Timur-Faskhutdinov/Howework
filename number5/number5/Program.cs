@@ -16,8 +16,9 @@ namespace number5
             a2 = int.Parse(Console.ReadLine());
             n = int.Parse(Console.ReadLine());
             a2 = a2 - a1;
+            // Вычисляю разность прогрессии, а дальше использую стандартную формулу.
             s = (2 * a1 + (n - 1) * a2) * n / 2;
-            Console.WriteLine(s);
+            Console.WriteLine("Сумма = {0}",s);
         }
     }
 }

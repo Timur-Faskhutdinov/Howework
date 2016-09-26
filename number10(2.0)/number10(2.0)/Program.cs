@@ -8,10 +8,11 @@ namespace number10
 {
     class Program
     {
-        static Int64 PowByMod(Int64 a, Int64 k, Int64 n)
+        static Int64 PowByMod(decimal a, decimal k, decimal n)
         {
             // Возведение в степень по модулю.
-            Int64 b = 1;
+            decimal b = 1;
+
             while (k > 0)
             {
                 if (k % 2 == 0)
@@ -25,7 +26,7 @@ namespace number10
                     b = (b * a) % n;
                 }
             }
-            return b;
+            return Convert.ToInt64(b);
         }
 
         static void Decomp(Int64 n, out int s, out Int64 t)
@@ -54,18 +55,28 @@ namespace number10
             Int64 a, x, t = 0;
 
             r = Convert.ToInt32(Math.Round(Math.Log(n) / Math.Log(2)));
+            // Количество проверок.
             Decomp(n, out s, out t);
             for (int i = 0; i < r; i++)
             {
                 exit = false;
 
-                if (n > 1000000000)
+                if (n > 100000000)
                 {
-                    a = rnd.Next(2, 1000000000);
+                    a = rnd.Next(2, 100000000);
                 }
                 else
                 {
-                    a = rnd.Next(2, Convert.ToInt32(n - 1));
+                    if (n < 3)
+                    {
+                        a = 1;
+                    }
+                    else
+                    {
+                        a = rnd.Next(2, Convert.ToInt32(n - 1));
+                    }
+                    
+                    
                 }
 
 
@@ -122,15 +133,15 @@ namespace number10
             // False - составное, true - простое.
             n = Int64.Parse(Console.ReadLine());
             double p = n / 2;
-            //q = TestMR(n);
-            //if (q == true)
-            //{
+            // q = TestMR(n);
+            // if (q == true)
+            // {
             // Я не проверяю само число на простоту, т.к. не могу организовать проверку для всех n без выхода
-            // за границу int64 (Выход поисходит в функции PowByMod).
+            // за границу decimal (Выход поисходит в функции PowByMod).
             //   g = n;
-            //}
-            //else
-            //{
+            // }
+            // else
+            // {
             g = Convert.ToInt64(Math.Round(p)) + 1;
             while ((g >= 2) && (q == false))
             {
@@ -140,12 +151,12 @@ namespace number10
                     q = TestMR(g);
                 }
             }
-            //}
+            // }
             if (q == false)
             {
                 g = 1;
             }
-            Console.WriteLine(g);
+            Console.WriteLine("Самый большой простой делитель {0}",g);
             Console.ReadLine();
 
 

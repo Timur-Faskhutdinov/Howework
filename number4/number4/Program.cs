@@ -17,7 +17,7 @@ namespace number4
             {
                 s += i;
             }
-            Console.WriteLine(s);
+            Console.WriteLine("Сумма = {0}",s);
         }
     }
 }
