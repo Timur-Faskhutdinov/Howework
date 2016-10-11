@@ -11,12 +11,16 @@ namespace number_2_5
         static void Main(string[] args)
         {
             double x,e;
+            int n;
+            Console.WriteLine("Ввод x");
             x = double.Parse(Console.ReadLine());
             //e = double.Parse(Console.ReadLine());
+            Console.WriteLine("Ввод количества итераций");
+            n = int.Parse(Console.ReadLine());
             double a0=x, b0=1, y0=0, ak=0, bk=0, yk=0,k=1;
-            bool f = false;
+            //bool f = false;
             //while (f == false)
-            for(int i=0;i<5;i++)
+            for(int i=0;i<n;i++)
             {
                 ak = a0 * a0;
                 bk = b0 / 2;
@@ -32,9 +36,7 @@ namespace number_2_5
                 b0 = bk;
                 y0 = yk;
             }
-            //x = Math.Pow(ak, bk) / yk;
             Console.WriteLine("a {0}\nb {1}\ny {2}", ak, bk, yk);
-            //Console.WriteLine(x);
             Console.ReadLine();
         }
     }
