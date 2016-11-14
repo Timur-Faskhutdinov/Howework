@@ -218,12 +218,17 @@ namespace number_3_4
             }
             string c = "", n = "", r = "";
             int z, k = 0, x = 1;
-            int y = 0;
+            int y = 0, y1 = 0;
             while (a.x.Length > k)
             {
+                //y1 = 0;
+                n += Convert.ToString(a.x[k]);
+                k++;
                 while (a.StringComparer(b.x, n) && (k < a.x.Length))
                 {
                     n += Convert.ToString(a.x[k]);
+                    if ((y != 0))
+                        c += "0";
                     k++;
                 }
                 x = 1;
@@ -245,6 +250,7 @@ namespace number_3_4
                 if (n[0] == '0')
                     n = n.Remove(0, 1);
                 c += Convert.ToString(x);
+                y++;
             }
 
             if (reverse)
