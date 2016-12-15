@@ -18,14 +18,13 @@ namespace Poker_by_dice
         public class Combination
         {
             int[] dices = new int[5];
-            private int comba;
+            private cmbt cm = new cmbt();
             public Combination() { }
-            public cmbt cm
+            public cmbt Cm
             {
                 get
                 {
-                    // Stack overflow, непонятно почему.
-                    int k1 = 0, m1 = 0, k2 = 0, m2 = 0;
+                    int k1 = 0, m1 = 0, k2 = 0, m2 = -1;
                     for (int i = 1; i <= 6; i++)
                     {
                         int k = 0;
@@ -34,11 +33,12 @@ namespace Poker_by_dice
                             if (dices[j] == i)
                             {
                                 k++;
+                                // можно переделать в список для уменьшения колва проходов.
                             }
                         }
-                        if (k >= m1)
+                        if (k >= m2)
                         {
-                            if (k >= m2)
+                            if (k >= m1)
                             {
                                 //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
                                 m2 = m1;
@@ -46,21 +46,22 @@ namespace Poker_by_dice
                                 m1 = i;
                                 k1 = k;
                             }
-                            //else
-                            //{
-                            //    m1 = i;
-                            //    k1 = k;
-                            //}
+                            else
+                            {
+                                m2 = i;
+                                k2 = k;
+                            }
                         }
-                        else if (k >= m2)
-                        {
-                            //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
-                            m2 = i;
-                            k2 = k;
-                        }
+                        //else if (k >= m2)
+                        //{
+                        //    //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
+                        //    m2 = i;
+                        //    k2 = k;
+                        //}
                     }
                     switch (k1)
                     {
+                        // криво работает.
                         case 1:
                             cm.name = "нет комбинации";
                             cm.rank = 0;
@@ -127,10 +128,10 @@ namespace Poker_by_dice
             public override string ToString()
             {
                 StringBuilder s = new StringBuilder("");
-                foreach (int i in dices)
+                for (int i=0;i<5;i++)
                 {
-                    s.AppendLine(Convert.ToString(dices[i]));
-                    s.AppendLine(" ");
+                    s.Append(Convert.ToString(dices[i]));
+                    s.Append(" ");
                 }
                 return s.ToString();
             }
@@ -150,7 +151,7 @@ namespace Poker_by_dice
         }
         public override string ToString()
         {
-            return string.Format($"{name}\n {dice}\n {dice.cm.name} power: {dice.cm.val}");
+            return string.Format($"{name}\n {dice}\n {dice.Cm.name}     power: {dice.Cm.val}");
         }
     }
 }

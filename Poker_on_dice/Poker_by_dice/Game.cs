@@ -9,18 +9,23 @@ namespace Poker_by_dice
     class Game
     {
         int playervalue;
-        Player[] gamers;
+        List<Player> gamers = new List<Player>();
+        // попробывать лист
+        // полю не присваивается значение??????????
         //public bool newgame;
         public Game()
         {
             //Console.WriteLine("Введите количество игроков");
             playervalue = 2;// int.Parse(Console.ReadLine());
-            Player[] gamers = new Player[playervalue];
+            //Player[] gamers = new Player[playervalue];
+            //for (int k = 0; k < playervalue; k++)
+            //    gamers[k] = new Player();
             for (int k = 0; k < playervalue; k++)
-                gamers[k] = new Player();
+                gamers.Add(new Player());
+            List<int> max = new List<int>();
             for (int i = 0; i < 2; i++)
             {
-                List<int> max = new List<int>();
+                max.Clear();
                 for(int k = 0; k < playervalue; k++)
                 {
                     Console.WriteLine(gamers[k]);
@@ -29,17 +34,20 @@ namespace Poker_by_dice
                 Console.WriteLine("Лидируют:");
                 for(int k = 0; k < max.Count; k++)
                 {
-                    Console.Write($"{gamers[i].name} ");
+                    Console.Write($"{gamers[max[k]].name} ");
                 }
-                Perebros();
-                max = Compare();
-                Console.WriteLine("Победители:");
-                for (int k = 0; k < max.Count; k++)
-                {
-                    Console.Write($"{gamers[i].name} ");
-                }
+                Perebros();              
             }
-
+            for (int k = 0; k < playervalue; k++)
+            {
+                Console.WriteLine(gamers[k]);
+            }
+            max = Compare();
+            Console.WriteLine("Победители:");
+            for (int k = 0; k < max.Count; k++)
+            {
+                Console.Write($"{gamers[max[k]].name} ");
+            }
         }
         public List<int> Compare()
         {
@@ -48,23 +56,23 @@ namespace Poker_by_dice
             for(int i = 0; i < playervalue; i++)
             {
                 //находим мах ранг, затем сравнив валю. если одинак- возвращ список из победителей.
-                if (gamers[i].dice.cm.rank > mrank)
-                    mrank = gamers[i].dice.cm.rank;
+                if (gamers[i].dice.Cm.rank > mrank)
+                    mrank = gamers[i].dice.Cm.rank;
             }
             for (int i = 0; i < playervalue; i++)
             {
-                if (gamers[i].dice.cm.rank == mrank)
+                if (gamers[i].dice.Cm.rank == mrank)
                 {
-                    if (gamers[i].dice.cm.val > mvalue)
+                    if (gamers[i].dice.Cm.val > mvalue)
                     {
-                        mvalue = gamers[i].dice.cm.val;
+                        mvalue = gamers[i].dice.Cm.val;
                     }
                     
                 }
             }
             for(int i = 0; i < playervalue; i++)
             {
-                if ((gamers[i].dice.cm.val == mvalue) && (gamers[i].dice.cm.rank == mrank))
+                if ((gamers[i].dice.Cm.val == mvalue) && (gamers[i].dice.Cm.rank == mrank))
                     max.Add(i);
             }
             return max;
