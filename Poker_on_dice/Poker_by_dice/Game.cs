@@ -15,8 +15,8 @@ namespace Poker_by_dice
         //public bool newgame;
         public Game()
         {
-            //Console.WriteLine("Введите количество игроков");
-            playervalue = 2;// int.Parse(Console.ReadLine());
+            Console.WriteLine("Введите количество игроков:");
+            playervalue = int.Parse(Console.ReadLine());
             //Player[] gamers = new Player[playervalue];
             //for (int k = 0; k < playervalue; k++)
             //    gamers[k] = new Player();
@@ -31,7 +31,7 @@ namespace Poker_by_dice
                     Console.WriteLine(gamers[k]);
                 }
                 max = Compare();
-                Console.WriteLine("Лидируют:");
+                Console.WriteLine("\nЛидируют:");
                 for(int k = 0; k < max.Count; k++)
                 {
                     Console.Write($"{gamers[max[k]].name} ");
@@ -43,11 +43,12 @@ namespace Poker_by_dice
                 Console.WriteLine(gamers[k]);
             }
             max = Compare();
-            Console.WriteLine("Победители:");
+            Console.WriteLine("\nПобедители:");
             for (int k = 0; k < max.Count; k++)
             {
                 Console.Write($"{gamers[max[k]].name} ");
             }
+            Console.WriteLine();
         }
         public List<int> Compare()
         {

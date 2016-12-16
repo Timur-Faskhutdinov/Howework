@@ -18,6 +18,10 @@ namespace Poker_by_dice
                 Console.WriteLine("Хотите начать новую игру(true/false):");
                 newgame = bool.Parse(Console.ReadLine());
             }
+            // ideas
+            //главное меню, рекорды(файл), файл конфига(настройки).
+            // просто мысли:
+            // боты(паттерн: перебрасывают те кубы, что не в комбе)
         }
     }
 }

@@ -24,11 +24,12 @@ namespace Poker_by_dice
             {
                 get
                 {
+                    //List<int> l = dices.ToList<int>();
                     int k1 = 0, m1 = 0, k2 = 0, m2 = -1;
                     for (int i = 1; i <= 6; i++)
                     {
                         int k = 0;
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < dices.Length; j++)
                         {
                             if (dices[j] == i)
                             {
@@ -36,9 +37,10 @@ namespace Poker_by_dice
                                 // можно переделать в список для уменьшения колва проходов.
                             }
                         }
-                        if (k >= m2)
+
+                        if (k >= k2)
                         {
-                            if (k >= m1)
+                            if (k >= k1)
                             {
                                 //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
                                 m2 = m1;
@@ -52,6 +54,7 @@ namespace Poker_by_dice
                                 k2 = k;
                             }
                         }
+                        
                         //else if (k >= m2)
                         //{
                         //    //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
@@ -59,13 +62,13 @@ namespace Poker_by_dice
                         //    k2 = k;
                         //}
                     }
+                    //Console.WriteLine($"{k1} {k2}");
                     switch (k1)
                     {
-                        // криво работает.
                         case 1:
                             cm.name = "нет комбинации";
                             cm.rank = 0;
-                            cm.val = m1;
+                            cm.val = m1;//dices.Max()
                             //return cm;
                             break;
                         case 2:
@@ -127,11 +130,11 @@ namespace Poker_by_dice
             }
             public override string ToString()
             {
-                StringBuilder s = new StringBuilder("");
+                StringBuilder s = new StringBuilder("|");
                 for (int i=0;i<5;i++)
                 {
                     s.Append(Convert.ToString(dices[i]));
-                    s.Append(" ");
+                    s.Append("|");
                 }
                 return s.ToString();
             }
@@ -151,7 +154,7 @@ namespace Poker_by_dice
         }
         public override string ToString()
         {
-            return string.Format($"{name}\n {dice}\n {dice.Cm.name}     power: {dice.Cm.val}");
+            return string.Format($"{name}\n {dice}\n {dice.Cm.name}"); //power: { dice.Cm.val}
         }
     }
 }
