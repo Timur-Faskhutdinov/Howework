@@ -12,6 +12,7 @@ namespace Poker_by_dice
         static void Main(string[] args)
         {
             bool newgame = true;
+            Console.WriteLine("ПОКЕР НА КОСТЯХ v1.0");
             while (newgame)
             {
                 Game a = new Game();
