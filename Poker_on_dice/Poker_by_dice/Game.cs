@@ -10,16 +10,10 @@ namespace Poker_by_dice
     {
         int playervalue;
         List<Player> gamers = new List<Player>();
-        // попробывать лист
-        // полю не присваивается значение??????????
-        //public bool newgame;
         public Game()
         {
             Console.WriteLine("Введите количество игроков:");
             playervalue = int.Parse(Console.ReadLine());
-            //Player[] gamers = new Player[playervalue];
-            //for (int k = 0; k < playervalue; k++)
-            //    gamers[k] = new Player();
             for (int k = 0; k < playervalue; k++)
                 gamers.Add(new Player());
             List<int> max = new List<int>();

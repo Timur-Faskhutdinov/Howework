@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Poker_by_dice
 {
-    class Player//:Combination
+    class Player
     {
         public class cmbt
         {
             public int val;
             public int rank;
             public string name;
-            //public cmbt() { }
         }
         public class Combination
         {
@@ -24,7 +23,6 @@ namespace Poker_by_dice
             {
                 get
                 {
-                    //List<int> l = dices.ToList<int>();
                     int k1 = 0, m1 = 0, k2 = 0, m2 = -1;
                     for (int i = 1; i <= 6; i++)
                     {
@@ -34,7 +32,6 @@ namespace Poker_by_dice
                             if (dices[j] == i)
                             {
                                 k++;
-                                // можно переделать в список для уменьшения колва проходов.
                             }
                         }
 
@@ -54,22 +51,13 @@ namespace Poker_by_dice
                                 k2 = k;
                             }
                         }
-                        
-                        //else if (k >= m2)
-                        //{
-                        //    //k1-колво повторов кубов, m1 - их ранг, k2 m2 для фуллхауса.
-                        //    m2 = i;
-                        //    k2 = k;
-                        //}
                     }
-                    //Console.WriteLine($"{k1} {k2}");
                     switch (k1)
                     {
                         case 1:
                             cm.name = "нет комбинации";
                             cm.rank = 0;
-                            cm.val = m1;//dices.Max()
-                            //return cm;
+                            cm.val = m1;
                             break;
                         case 2:
                             if (k2 == 2)
@@ -84,7 +72,6 @@ namespace Poker_by_dice
                                 cm.rank = 1;
                                 cm.val = m1;
                             }
-                            //return cm;
                             break;
                         case 3:
                             if (k2 == 2)
@@ -99,23 +86,19 @@ namespace Poker_by_dice
                                 cm.rank = 3;
                                 cm.val = m1;
                             }
-                            //return cm;
                             break;
                         case 4:
                             cm.name = "каре";
                             cm.rank = 5;
                             cm.val = m1;
                             break;
-                        //return cm;
                         case 5:
                             cm.name = "покер";
                             cm.rank = 6;
                             cm.val = m1;
                             break;
-                            //return cm;
                         default:
                             break;
-                            //return cm;
                     }
                     return cm;
                 }
@@ -141,11 +124,10 @@ namespace Poker_by_dice
         }
             public string name { get; private set; }
         public Combination dice = new Combination();
-        public Player()//string a = "Anonimous")
+        public Player()
         {
             Console.WriteLine("Введите имя:");
             name = Console.ReadLine();
-            //k++;
             dice.Roll();
         }
         public void Reroll(string a)
