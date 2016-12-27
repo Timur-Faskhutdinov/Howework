@@ -74,7 +74,7 @@ namespace Poker_by_dice
         }
         private void Perebros()
         {
-            Console.WriteLine("Какие кости перебрасывать?");
+            Console.WriteLine("\nКакие кости перебрасывать?");
             for (int i = 0; i < playervalue; i++)
             {
                 Console.WriteLine($"{gamers[i].name}:");
