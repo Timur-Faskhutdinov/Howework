@@ -8,19 +8,23 @@ namespace Poker_by_dice
 {
     class Game
     {
-        int playervalue;
+        int playervalue,botvalue;
         List<Player> gamers = new List<Player>();
         public Game()
         {
             Console.WriteLine("Введите количество игроков:");
             playervalue = int.Parse(Console.ReadLine());
+            Console.WriteLine("Введите количество ботов");
+            botvalue = int.Parse(Console.ReadLine());
             for (int k = 0; k < playervalue; k++)
-                gamers.Add(new Player());
+                gamers.Add(new Player(k));
+            for (int k = 0; k < botvalue; k++)
+                gamers.Add(new Bot(k));
             List<int> max = new List<int>();
             for (int i = 0; i < 2; i++)
             {
                 max.Clear();
-                for(int k = 0; k < playervalue; k++)
+                for(int k = 0; k < playervalue+botvalue; k++)
                 {
                     Console.WriteLine(gamers[k]);
                 }
@@ -32,7 +36,7 @@ namespace Poker_by_dice
                 }
                 Perebros();              
             }
-            for (int k = 0; k < playervalue; k++)
+            for (int k = 0; k < playervalue + botvalue; k++)
             {
                 Console.WriteLine(gamers[k]);
             }
@@ -48,13 +52,13 @@ namespace Poker_by_dice
         {
             List<int> max = new List<int>();
             int mrank = 0, mvalue = 0;
-            for(int i = 0; i < playervalue; i++)
+            for(int i = 0; i < playervalue + botvalue; i++)
             {
                 //находим мах ранг, затем сравнив валю. если одинак- возвращ список из победителей.
                 if (gamers[i].dice.Cm.rank > mrank)
                     mrank = gamers[i].dice.Cm.rank;
             }
-            for (int i = 0; i < playervalue; i++)
+            for (int i = 0; i < playervalue + botvalue; i++)
             {
                 if (gamers[i].dice.Cm.rank == mrank)
                 {
@@ -65,7 +69,7 @@ namespace Poker_by_dice
                     
                 }
             }
-            for(int i = 0; i < playervalue; i++)
+            for(int i = 0; i < playervalue + botvalue; i++)
             {
                 if ((gamers[i].dice.Cm.val == mvalue) && (gamers[i].dice.Cm.rank == mrank))
                     max.Add(i);
@@ -79,6 +83,10 @@ namespace Poker_by_dice
             {
                 Console.WriteLine($"{gamers[i].name}:");
                 gamers[i].Reroll(Console.ReadLine());
+            }
+            for (int i = playervalue; i < playervalue + botvalue; i++)
+            {
+                gamers[i].Reroll(gamers[i].dice.Cm.freedices);
             }
         }
     }
