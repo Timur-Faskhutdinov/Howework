@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Coffemachine_DZ_3
 {
-    class CoffeMachine
+    public class CoffeMachine
     {
         public CoffeMachine()
         {
@@ -66,7 +66,7 @@ namespace Coffemachine_DZ_3
             Storage.AppearSuply();
         }
     }
-    class Cup
+    public class Cup
     {
         public bool iswater;
         //public bool ishot;
@@ -98,7 +98,7 @@ namespace Coffemachine_DZ_3
             Console.WriteLine("Your coffe is ready!");
         }
     }
-    class Inf
+    public class Inf
     {
         public static Dictionary<string, double[]> consist= new Dictionary<string, double[]>();
         public static void Add()
@@ -108,7 +108,7 @@ namespace Coffemachine_DZ_3
             consist.Add("hot_chocolad", new double[] { 170.0, 50.0, 8.0});
         }
     }
-    static class Poroski
+    public static class Poroski
     {
         public static Dictionary<string, decimal> coffelist= new Dictionary<string, decimal>();
         public static void Add()
@@ -118,9 +118,9 @@ namespace Coffemachine_DZ_3
             coffelist.Add("hot_chocolad", 8.1M);
         }
     }
-    static class Storage
+    public static class Storage
     {
-        public static double milk = 1000000.0; //millilitr
+        public static double milk = 10000.0; //millilitr
         public static double water = 100000.0; // -||-
         public static double sugar = 1000.0; // gramm
         public static double coffe = 1000.0; // gramm
@@ -132,22 +132,22 @@ namespace Coffemachine_DZ_3
           coffe = 1000.0; // gramm
         }
     }
-    class Milk
+    public class Milk
     {
         public double value;
-        public bool ispena;       
+        //public bool ispena;       
         public Milk(double g)
         {
             value = g;
             Storage.milk -= g;
-            ispena = false;
+            //ispena = false;
         }
-        public void Mikser()
-        {
-            ispena = true;
-        }
+        //public void Mikser()
+        //{
+        //    ispena = true;
+        //}
     }
-    class Water
+    public class Water
     {
         public double value=0; //!!!
         public bool ishot;
@@ -162,7 +162,7 @@ namespace Coffemachine_DZ_3
             ishot = true;
         }
     }
-    class Money
+    public class Money
     {
         public static decimal bigmoney = 0.0M;
         public static int tu_10 = 10;
@@ -175,7 +175,7 @@ namespace Coffemachine_DZ_3
         {
             get
             {
-                return (decimal)(bigmoney + tu_10 * 10 + tu_5 * 5 + tu_2 * 2 + tu_1 + cent_50 / 2 + cent_10 / 10);
+                return (decimal)(bigmoney + tu_10 * 10 + tu_5 * 5 + tu_2 * 2 + tu_1 + Convert.ToDecimal(cent_50 *0.5) + Convert.ToDecimal(cent_10 * 0.1));
             }
         }
         public static bool TrySdacha(decimal f)
@@ -328,7 +328,7 @@ namespace Coffemachine_DZ_3
             return;
         }
     }
-    class Sugar
+    public class Sugar
     {
         private double _valui;
         public double valui
@@ -354,7 +354,7 @@ namespace Coffemachine_DZ_3
             Storage.sugar -= valui;
         }
     }
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
