@@ -187,6 +187,7 @@ namespace ASD_Semesdtrovka_1
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter 2 DNF");
             DNF a = new DNF(Console.ReadLine());
             DNF b = new DNF(Console.ReadLine());
             Console.WriteLine(a);
