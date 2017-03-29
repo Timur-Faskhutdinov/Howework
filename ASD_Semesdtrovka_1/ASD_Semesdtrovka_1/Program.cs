@@ -24,35 +24,38 @@ namespace ASD_Semesdtrovka_1
         }
         public override string ToString()
         {
-            //string non="", min = "-";
             StringBuilder s = new StringBuilder();
             foreach(Konj i in KList)
             {
-                //foreach(int j in i.ArLst)
-                //{
-                //    if (j > 0)
-                //    {
-                //        s.AppendFormat($"{0}X{1}&", j > 0 ? "" : "-",Math.Abs(j)); // чекнуть
-                //    }
-                //}
-                //s.Remove(s.Length - 1, 1);
                 s.Append(i.ToString());
                 s.Append(" V ");
             }
             s.Remove(s.Length - 3, 3);
             return s.ToString();
         }
-        public void Insert(Konj k,bool f=false)
+        public void Insert(Konj k)//,bool f=false)
         {
             // Какая-то ересь. Метод работает прямо противоположно, если вызвать его напрямую, он добавит элемент если
             // он уже есть в списке и наоборот, не добавит, если его нет. через метод Disj работает корректно.
             // Пришлось запилить костыль-флаг.
-            // разобрался - нужна своя реализация contain!!!
-            if ((KList.Contains(k)==true)&(f==false)||(f==true)&(KList.Contains(k) == false)) // check
+            // разобрался - нужна своя реализация contain
+            //if ((KList.Contains(k) == true))) &(f == false) || (f == true) & (KList.Contains(k) == false)) // check
+            //{
+            //    KList.Add(k);
+            //}
+            //Console.WriteLine(KList[0].ToString().Equals(k.ToString()));
+            bool f = false;
+            foreach (Konj i in KList)
+            {
+                if (Konj.Equals(i, k))
+                {
+                    f = true;
+                }
+            }
+            if (!f)
             {
                 KList.Add(k);
             }
-            //Console.WriteLine(KList[0].ToString().Equals(k.ToString()));
             return;
         }
         public static DNF Disj(DNF a,DNF b)
@@ -61,7 +64,7 @@ namespace ASD_Semesdtrovka_1
             w.KList = a.KList;
             foreach(Konj i in b.KList)
             {
-                w.Insert(i,true);
+                w.Insert(i);//,true);
             }
             return w;
         }
@@ -89,14 +92,13 @@ namespace ASD_Semesdtrovka_1
             return w;
         }
     }
-    class Konj : IComparable<Konj>,IEqualityComparer<Konj>
+    class Konj : IComparable<Konj>//,IEqualityComparer<Konj>
     {
         public List<int> ArLst;
         public Konj(string a)
         {
             ArLst = new List<int>();
             List<string> d = a.Split('&').ToList();
-            //int y = 1;
             foreach (string j in d)
             {
                 if (j[0] == '-')
@@ -151,41 +153,33 @@ namespace ASD_Semesdtrovka_1
 
         public int CompareTo(Konj other)
         {
-            return ToString().Length.CompareTo(other.ToString().Length); // если сравнивает не в ту сторону - прерставить экземпляры.
+            return ToString().Length.CompareTo(other.ToString().Length);
         }
 
-        //public bool Equals(Konj other)
-        //{
-        //    //throw new NotImplementedException();
-        //    return Equals(ArLst, other.ArLst);
-        //}
+        public bool Equals(Konj other)
+        {
+            return Equals(ToString(), other.ToString());
+        }
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();
 
             foreach (int j in ArLst)
             {
-                //if (j > 0)
-                //{
-                    //string r = j > 0 ? "" : "-";
-                //Console.WriteLine(r);
-                    s.AppendFormat(String.Format("{0}X{1}&", j > 0 ? "" : "-", Math.Abs(j))); // чекнуть
-                //}
+                s.AppendFormat(String.Format("{0}X{1}&", j > 0 ? "" : "-", Math.Abs(j)));
             }
             s.Remove(s.Length - 1, 1);
             return s.ToString();
         }
 
-        public bool Equals(Konj x, Konj y)
+        public static bool Equals(Konj x, Konj y)
         {
-            //throw new NotImplementedException();
             return Equals(x.ToString(), y.ToString());
             //return x.ToString().Equals(y.ToString());
         }
 
         public int GetHashCode(Konj obj)
         {
-            //throw new NotImplementedException();
             return obj.ToString().GetHashCode();
         }
     }
@@ -193,7 +187,6 @@ namespace ASD_Semesdtrovka_1
     {
         static void Main(string[] args)
         {
-            // реализовать contain для insert!!!
             DNF a = new DNF(Console.ReadLine());
             DNF b = new DNF(Console.ReadLine());
             Console.WriteLine(a);
