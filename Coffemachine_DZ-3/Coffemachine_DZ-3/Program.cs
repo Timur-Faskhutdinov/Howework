@@ -10,14 +10,20 @@ namespace Coffemachine_DZ_3
     {
         public CoffeMachine()
         {
-            if((Storage.coffe<10.0)||(Storage.sugar < 10.0) ||(Storage.milk < 50.0) ||(Storage.water < 500.0))
+            bool vend=true;
+            if((Storage.coffe<10.0)||(Storage.sugar < 10.0) ||(Storage.milk < 50.0) ||(Storage.water < 500.0)||(Storage.Nicght))
             {
                 CallSupport();
             }
-            Console.WriteLine("Выберите напиток");
+            Console.WriteLine("Выберите товар");
             int i = 0;
             string s;
-            foreach(KeyValuePair<string,decimal> k in Poroski.coffelist)
+            foreach(KeyValuePair<string,decimal> k in Assort.coffelist)
+            {
+                i++;
+                Console.WriteLine($"{i} - {k.Key} стоимостью {k.Value} тугриков");
+            }
+            foreach (KeyValuePair<string, decimal> k in Assort.vending)
             {
                 i++;
                 Console.WriteLine($"{i} - {k.Key} стоимостью {k.Value} тугриков");
@@ -26,26 +32,53 @@ namespace Coffemachine_DZ_3
             switch (i)
             {
                 case 1:
-                    s = Poroski.coffelist.Keys.ToList()[0];
+                    s = Assort.coffelist.Keys.ToList()[0];
+                    vend = false;
                     break;
                 case 2:
-                    s = Poroski.coffelist.Keys.ToList()[1];
+                    s = Assort.coffelist.Keys.ToList()[1];
+                    vend = false;
                     break;
                 case 3:
-                    s = Poroski.coffelist.Keys.ToList()[2];
+                    s = Assort.coffelist.Keys.ToList()[2];
+                    vend = false;
+                    break;
+                case 4:
+                    s = Assort.vending.Keys.ToList()[0];
+                    break;
+                case 5:
+                    s = Assort.vending.Keys.ToList()[1];
+                    break;
+                case 6:
+                    s = Assort.vending.Keys.ToList()[2];
+                    break;
+                case 7:
+                    s = Assort.vending.Keys.ToList()[3];
+                    break;
+                case 8:
+                    s = Assort.vending.Keys.ToList()[4];
+                    break;
+                case 9:
+                    s = Assort.vending.Keys.ToList()[5];
                     break;
                 default:
                     return;
             }
-            Money mn = new Money();
-            if (mn.sum >= Poroski.coffelist[s])
+            Money mn = new Money(Assort.coffelist.ContainsKey(s) ? Assort.coffelist[s] : Assort.vending[s]);
+            if (mn.sum >= (Assort.coffelist.ContainsKey(s) ? Assort.coffelist[s] : Assort.vending[s]))
             {
-                if (Money.TrySdacha(mn.sum - Poroski.coffelist[s]))
+                if (Money.TrySdacha(mn.sum - (Assort.coffelist.ContainsKey(s) ? Assort.coffelist[s] : Assort.vending[s])))
                 {
-                    Money.Sdacha(mn.sum - Poroski.coffelist[s]);
-                    Cup ch = new Cup(s);
-                    ch.Create();
-
+                    Money.Sdacha(mn.sum - (Assort.coffelist.ContainsKey(s) ? Assort.coffelist[s] : Assort.vending[s]));
+                    if (vend)
+                    {
+                        Console.WriteLine($"Возьмите свой {s}\nПриятного аппетита!");
+                    }
+                    else
+                    {
+                        Cup ch = new Cup(s);
+                        ch.Create();
+                    }
                 }
                 else
                 {
@@ -108,14 +141,22 @@ namespace Coffemachine_DZ_3
             consist.Add("hot_chocolad", new double[] { 170.0, 50.0, 8.0});
         }
     }
-    public static class Poroski
+    public static class Assort
     {
         public static Dictionary<string, decimal> coffelist= new Dictionary<string, decimal>();
+        public static Dictionary<string, decimal> vending = new Dictionary<string, decimal>();
         public static void Add()
         {
             coffelist.Add("kapuchino", 12.7M);
             coffelist.Add("espresso", 15.5M);
             coffelist.Add("hot_chocolad", 8.1M);
+            vending.Add("butelka vody", 3.7M);
+            vending.Add("snikersni", 4.1M);
+            vending.Add("kirieshky", 3.5M);
+            vending.Add("layz", 5.0M);
+            vending.Add("sok", 7.7M);
+            vending.Add("cola", 4.5M);
+
         }
     }
     public static class Storage
@@ -124,12 +165,38 @@ namespace Coffemachine_DZ_3
         public static double water = 100000.0; // -||-
         public static double sugar = 1000.0; // gramm
         public static double coffe = 1000.0; // gramm
+        public static int voda = 25;
+        public static int snikers = 25;
+        public static int suhariki = 25;
+        public static int chipse = 25;
+        public static int sok = 25;
+        public static int cola = 25;
         public static void AppearSuply()
         {
-          milk = 1000000.0; //millilitr
-          water = 100000.0; // -||-
-          sugar= 1000.0; // gramm
-          coffe = 1000.0; // gramm
+            milk = 1000000.0; //millilitr
+            water = 100000.0; // -||-
+            sugar= 1000.0; // gramm
+            coffe = 1000.0; // gramm
+            voda = 25;
+            snikers = 25;
+            suhariki = 25;
+            chipse = 25;
+            sok = 25;
+            cola = 25;
+    }
+        public static bool Nicght
+        {
+            get
+            {
+                if ((voda == 0) || (snikers == 0) || (suhariki == 0) || (chipse == 0) || (sok == 0) || (cola == 0))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
     public class Milk
@@ -211,44 +278,59 @@ namespace Coffemachine_DZ_3
             }
         }
         public decimal sum;
-        public Money()
+        public Money(decimal rt)
         {
             sum = 0.0M;
+            Console.WriteLine("Хотите оплатить картой?");
+            if (bool.Parse(Console.ReadLine()))
+            {
+                Console.WriteLine("Вставте карту");
+                Console.ReadLine();
+                Console.WriteLine("Введите пин-код");
+                Console.ReadLine();
+                sum = rt;
+                bigmoney += rt;
+                Console.WriteLine("Оплата произведена. Возьмите карту.");
+                Console.ReadLine();
+            }
+            else
+            {
             Console.WriteLine("Вставьте монетку\n0 - закончить ввод\n1 - 10 центов\n2 - 50центов\n3 - 1 тугрик");
             Console.WriteLine("4 - 2 тугрика\n5 - 5 тугриков\n6 - 10 тугриков\n7 - 50 тугриков");
             int k = 1;
-            while (k != 0)
-            {
-                k = int.Parse(Console.ReadLine());
-                switch (k)
+                while (k != 0)
                 {
-                    case 0:
-                        break;
-                    case 1:
-                        enter_cent_10();
-                        break;
-                    case 2:
-                        enter_cent_50();
-                        break;
-                    case 3:
-                        enter_tu_1();
-                        break;
-                    case 4:
-                        enter_tu_2();
-                        break;
-                    case 5:
-                        enter_tu_5();
-                        break;
-                    case 6:
-                        enter_tu_10();
-                        break;
-                    case 7:
-                        bigmoney += 50.0M;
-                        sum += 50.0M;
-                        break;
-                    default:
-                        Console.WriteLine("Монета неопознанного формата.");
-                        break;
+                    k = int.Parse(Console.ReadLine());
+                    switch (k)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            enter_cent_10();
+                            break;
+                        case 2:
+                            enter_cent_50();
+                            break;
+                        case 3:
+                            enter_tu_1();
+                            break;
+                        case 4:
+                            enter_tu_2();
+                            break;
+                        case 5:
+                            enter_tu_5();
+                            break;
+                        case 6:
+                            enter_tu_10();
+                            break;
+                        case 7:
+                            bigmoney += 50.0M;
+                            sum += 50.0M;
+                            break;
+                        default:
+                            Console.WriteLine("Монета неопознанного формата.");
+                            break;
+                    }
                 }
             }
         }
@@ -358,12 +440,12 @@ namespace Coffemachine_DZ_3
     {
         static void Main(string[] args)
         {
-            Poroski.Add();
+            Assort.Add();
             Inf.Add();
             bool f = true;
             while (f)
             {
-                Console.WriteLine("Хотите еще кофе? (boolean)");
+                Console.WriteLine("Хотите еще что-нибудь? (boolean)");
                 f = bool.Parse(Console.ReadLine());
                 if (f)
                 {
