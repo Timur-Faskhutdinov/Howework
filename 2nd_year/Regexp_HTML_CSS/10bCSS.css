@@ -1,0 +1,65 @@
+﻿body {
+
+}
+        table.q1
+        {
+            position:center
+        }
+table.q1 
+{
+    width: 680px
+}
+        td.st1 {
+                color:red
+            }
+        td.st1{
+            text-align:left
+        }
+        td.st2{
+            color:black
+        }
+        td.st2{
+            text-align:center
+        }
+        td.st3{
+            color:green
+        }
+        td.st3{
+            text-align:right
+        }
+        td.st4{
+            color:yellow
+        }
+        td.st4{
+            text-align:left
+        }
+        td.st5{
+            color:black
+        }
+        td.st5{
+            text-align:left
+        }
+        td.st6{
+            color:green
+        }
+        td.st6{
+            text-align:left
+        }
+        td.st7{
+            color:blue
+        }
+        td.st7{
+            text-align:left
+        }
+        td.st8{
+            color:blue
+        }
+        td.st8{
+            text-align:center
+        }
+        td.st9{
+            color:red
+        }
+        td.st9{
+            text-align:center
+        }
